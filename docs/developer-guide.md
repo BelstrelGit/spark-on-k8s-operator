@@ -61,6 +61,10 @@ To run unit tests, run the following command:
 
 ```bash
 $ go test ./...
+
+or using github workflows
+
+$ act pull_request --platform ubuntu-latest=lucasalt/act_base:latest
 ```
 
 ## Build the API Specification Doc
