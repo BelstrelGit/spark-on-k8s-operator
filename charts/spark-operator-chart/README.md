@@ -22,10 +22,30 @@ The previous `spark-operator` Helm chart hosted at [helm/charts](https://github.
 ## Installing the chart
 
 ```shell
-
 $ helm repo add spark-operator https://googlecloudplatform.github.io/spark-on-k8s-operator
 
 $ helm install my-release spark-operator/spark-operator
+
+$ cd charts/spark-operator-chart
+$ helm install -n spark-operator sparkop . -f values.yaml --dry-run
+$ helm install -n spark-operator sparkop . -f values-production.yaml
+
+
+$ helm status -n spark-operator sparkop
+```
+
+Install via kubectl:
+
+```shell
+kubectl apply -f manifest/crds/sparkoperator.k8s.io_scheduledsparkapplications.yaml
+kubectl apply -f manifest/crds/sparkoperator.k8s.io_sparkapplications.yaml
+
+kubectl apply -f manifest/spark-operator-with-webhook.yaml -n spark-operator
+kubectl apply -f manifest/spark-rbac.yaml -n spark-operator
+
+helm install -n spark-operator sparkop . -f values-production.yaml
+
+helm install sparkoperator incubator/sparkoperator --namespace spark -f values-incubator.yaml
 ```
 
 This will create a release of `spark-operator` in the default namespace. To install in a different one:
